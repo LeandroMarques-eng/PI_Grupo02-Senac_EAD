@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto</title>
+    <link rel="stylesheet" href="/detalhes.CSS">
+    <style>
+        .control-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .control-buttons button {
+            background-color: #004080;
+            color: white;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .control-buttons button:hover {
+            background-color: #003366;
+        }
+
+    
+        body.high-contrast {
+            background-color: #121212; 
+            color: #ffffff;
+        }
+
+        body.high-contrast header, 
+        body.high-contrast footer {
+            background-color: #000000; 
+            color: white; 
+        }
+
+      
+        body.high-contrast .product {
+            background-color: #333333; 
+            color: white; 
+            border: 2px solid #ffffff; 
+        }
+
+        body.high-contrast .product img {
+            filter: brightness(0.7); 
+        }
+
+        body.high-contrast .product-details button {
+            background-color: #ff9900;
+            color: black; 
+            border: 2px solid #ffffff; 
+        }
+
+        body.high-contrast .product-details button:hover {
+            background-color: #e68a00; 
+        }
+
+        
+        body.high-contrast .cart-link {
+            color: #ff9900; 
+        }
+
+        body.high-contrast .cart-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 1.2rem;
+            padding: 20px;
+        }
+
+        body.high-contrast .product {
+            background-color: #333333;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-container">
+                <h1>Detalhes do Produto</h1>
+                <img class="logo" src="/public/assets/images/Logo Click Fácil.png" alt="Logo do E-commerce Inclusivo">
+                <a href="/PagProduto.HTML" class="back-link">← Voltar para a loja</a>
+                <a href="/carrinho.HTML" class="cart-link">🛒 Ver Carrinho</a>
+            </div>
+        </header>
+
+        <div class="control-buttons">
+            <button id="contrast-btn">Alto Contraste</button>
+            <button id="increase-font">A+</button>
+            <button id="decrease-font">A-</button>
+        </div>
+
+        <main>
+            <div class="product-detail">
+                <div class="product-image">
+                    <img src="" alt="Imagem do Produto" id="product-image">
+                </div>
+                <div class="product-info">
+                    <h2 id="product-name"></h2>
+                    <p id="product-description"></p>
+                    <span id="product-price"></span>
+                    <span id="product-shipping"></span>
+                    <button id="add-to-cart" class="add-to-cart-button">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+            <section id="similar-products">
+                <h2>Produtos Semelhantes</h2>
+                <div class="product-container" id="similar-products-list"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Click Fácil. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get("id");
+        
+        async function loadProductDetails() {
+            const response = await fetch('produtos.json');
+            const products = await response.json();
+            const product = products.find(p => p.nome.replace(/\s+/g, '-').toLowerCase() === productId);
+            
+            if (product) {
+                document.getElementById('product-image').src = product.imagem;
+                document.getElementById('product-name').textContent = product.nome;
+                document.getElementById('product-description').textContent = product.descricao;
+                document.getElementById('product-price').textContent = `R$ ${product.preco.toFixed(2)}`;
+                document.getElementById('product-shipping').textContent = product.frete === 0 ? 'Frete Grátis' : `Frete: R$ ${product.frete.toFixed(2)}`;
+                loadSimilarProducts(product.categoria);
+            }
+        }
+
+       
+        async function loadSimilarProducts(category) {
+            const response = await fetch('produtos.json');
+            const products = await response.json();
+            const similarProducts = products.filter(p => p.categoria === category && p.nome !== params.get("id"));
+            const container = document.getElementById('similar-products-list');
+            container.innerHTML = ""; 
+
+            similarProducts.forEach(product => {
+                let div = document.createElement('div');
+                div.classList.add('product');
+                div.innerHTML = `
+                    <a href="detalhes-produto.html?id=${product.nome.replace(/\s+/g, '-').toLowerCase()}">
+                        <img src="${product.imagem}" alt="${product.nome}">
+                        <div class="product-details">
+                            <p>${product.nome}</p>
+                            <span>R$ ${product.preco.toFixed(2)}</span>
+                        </div>
+                    </a>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        loadProductDetails();
+        document.getElementById('add-to-cart').addEventListener('click', function() {
+            const params = new URLSearchParams(window.location.search);
+            const productId = params.get("id");
+            
+            fetch('produtos.JSON')
+                .then(response => response.json())
+                .then(products => {
+                    const product = products.find(p => p.nome.replace(/\s+/g, '-').toLowerCase() === productId);
+                    addToCart(product);
+                    alert(`${product.nome} foi adicionado ao carrinho.`);
+                });
+        });
+
+        function addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingProduct = cart.find(item => item.nome === product.nome);
+
+            if (existingProduct) {
+                existingProduct.quantidade += 1;
+            } else {
+                product.quantidade = 1;
+                cart.push(product);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartIcon();
+        }
+        function updateCartIcon() {
+            const cartIcon = document.querySelector('.cart-link');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantidade, 0);
+            cartIcon.innerHTML = `🛒 Ver Carrinho (${totalItems})`;
+        }
+
+        updateCartIcon();
+
+
+        document.getElementById('contrast-btn').addEventListener('click', function() {
+            document.body.classList.toggle('high-contrast');
+        });
+
+        document.getElementById('increase-font').addEventListener('click', function() {
+            let currentFontSize = parseFloat(window.getComputedStyle(document.body).fontSize);
+            document.body.style.fontSize = (currentFontSize + 2) + 'px';
+        });
+
+        document.getElementById('decrease-font').addEventListener('click', function() {
+            let currentFontSize = parseFloat(window.getComputedStyle(document.body).fontSize);
+            document.body.style.fontSize = (currentFontSize - 2) + 'px';
+        });
+    </script>
+</body>
+</html>
