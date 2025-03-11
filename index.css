@@ -16,7 +16,7 @@ body {
     max-width: 2000px;
     margin: 0 auto;
     min-height: 45vh;
-    background: url('/public/assets/images/Imagem 2.jpeg') center center / contain no-repeat;
+    background: url('public/assets/images/Imagem 2.jpeg') center center / contain no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
