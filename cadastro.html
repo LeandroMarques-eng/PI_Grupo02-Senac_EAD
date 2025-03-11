@@ -12,6 +12,8 @@
     </header>
 
     <section class="form-section">
+        <button class="back-button" onclick="window.location.href='index.html';">← Voltar</button>
+        
         <form id="cadastroForm">
             <label for="nome">Nome Completo:</label>
             <input type="text" id="nome" name="nome" required>
@@ -95,5 +97,23 @@
             });
         });
     </script>
+
+    <style>
+        .back-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </body>
 </html>
