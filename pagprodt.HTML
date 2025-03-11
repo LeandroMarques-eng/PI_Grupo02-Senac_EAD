@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Fácil </title>
+    <link rel="stylesheet" href="/pagprodt.CSS">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Ubuntu:wght@400;500&display=swap" rel="stylesheet">
+
+</head>
+    <body>
+    <div class="container">
+        <header>
+            <img class="logo" src="/public/assets/images/Logo Click Fácil.png" alt="Logo do E-commerce Inclusivo">
+            <h1>Click Fácil</h1>
+            <a href="#" class="cart-link" id="cart-icon">🛒 Ver Carrinho</a>
+        </header>
+
+        
+        <div class="control-buttons">
+            <button id="contrast-btn">Alto Contraste</button>
+            <button id="increase-font">A+</button>
+            <button id="decrease-font">A-</button>
+        </div>
+
+      
+        <div class="modal" id="cart-modal">
+            <div class="modal-content">
+                <p>Produto(s) adicionado(s) ao carrinho!</p>
+                <p id="modal-total"></p>
+                <button onclick="goToCart()">Finalizar Compra</button>
+                <button onclick="closeModal()">Continuar Comprando</button>
+            </div>
+        </div>
+
+       
+        <div class="search-bar">
+            <input type="text" id="search-bar" placeholder="Buscar produtos..." onkeyup="searchProducts()">
+        </div>
+
+       
+        <div class="category-menu">
+            <button onclick="filterByCategory('saude')">Saúde</button>
+            <button onclick="filterByCategory('bem-estar')">Bem-Estar</button>
+            <button onclick="filterByCategory('tecnologia')">Tecnologia</button>
+            <button onclick="filterByCategory('todos')">Todos</button>
+        </div>
+
+        <div class="sort-menu">
+            <button onclick="sortProducts('preco-asc')">Preço: Menor para Maior</button>
+            <button onclick="sortProducts('preco-desc')">Preço: Maior para Menor</button>
+        </div>
+
+    
+        <div class="product-container" id="product-list">
+           
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Click Fácil. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        let produtos = [];
+
+        async function carregarProdutos() {
+            const response = await fetch('./produtos.JSON');    
+
+            produtos = await response.json();
+            displayProducts(produtos);
+        }
+
+        function displayProducts(produtos) {
+            const container = document.getElementById('product-list');
+            container.innerHTML = "";
+            produtos.forEach(produto => {
+                let div = document.createElement('div');
+                div.classList.add('product');
+                div.setAttribute('data-category', produto.categoria);
+                div.setAttribute('data-frete', produto.frete);
+
+                div.innerHTML = ` 
+                <a href="produto.HTML?nome=${encodeURIComponent(produto.nome)}&preco=${produto.preco}&frete=${produto.frete}&descricao=${encodeURIComponent(produto.descricao)}">
+
+                        <img src="${produto.imagem}" alt="${produto.nome}">
+                        <div class="product-details">
+                            <p>${produto.nome}</p>
+                            <span>R$${produto.preco}</span>
+                            <button>Comprar</button>
+                        </div>
+                    </a>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+
+        function searchProducts() {
+            const query = document.getElementById('search-bar').value.toLowerCase();
+            const filteredProducts = produtos.filter(produto => produto.nome.toLowerCase().includes(query));
+            displayProducts(filteredProducts);
+        }
+
+
+        function filterByCategory(categoria) {
+            const filteredProducts = categoria === 'todos' ? produtos : produtos.filter(produto => produto.categoria === categoria);
+            displayProducts(filteredProducts);
+        }
+
+        function sortProducts(ordenacao) {
+            let sortedProducts;
+            if (ordenacao === 'preco-asc') {
+                sortedProducts = [...produtos].sort((a, b) => a.preco - b.preco);
+            } else if (ordenacao === 'preco-desc') {
+                sortedProducts = [...produtos].sort((a, b) => b.preco - a.preco);
+            }
+            displayProducts(sortedProducts);
+        }
+
+        document.getElementById('contrast-btn').addEventListener('click', function() {
+            document.body.classList.toggle('high-contrast');
+        });
+
+
+        document.getElementById('increase-font').addEventListener('click', function() {
+            let currentFontSize = parseFloat(window.getComputedStyle(document.body).fontSize);
+            document.body.style.fontSize = (currentFontSize + 2) + 'px';
+        });
+
+        document.getElementById('decrease-font').addEventListener('click', function() {
+            let currentFontSize = parseFloat(window.getComputedStyle(document.body).fontSize);
+            document.body.style.fontSize = (currentFontSize - 2) + 'px';
+        });
+
+        function goToCart() {
+            window.location.href = 'carrinho.HTML';
+        }
+
+        function closeModal() {
+            document.getElementById('cart-modal').style.display = 'none';
+        }
+
+
+        document.getElementById('cart-icon').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.location.href = 'carrinho.HTML';
+        });
+
+        carregarProdutos();
+    </script>
+</body>
+</html>

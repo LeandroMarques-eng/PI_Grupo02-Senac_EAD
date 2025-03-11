@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto</title>
+    <link rel="stylesheet" href="/produto.css">
+</head>
+<body>
+    <header>
+        <h1>Detalhes do Produto</h1>
+        <a href="/pagprodt.HTML">Voltar</a>
+    </header>
+
+    <main id="produto-details">
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Click Fácil. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        async function carregarProdutoDetalhes() {
+    const response = await fetch('produtos.JSON');
+    const produtos = await response.json();
+
+    const nomeParametro = new URLSearchParams(window.location.search).get('nome');
+
+    const produto = produtos.find(p => p.nome === nomeParametro); // Encontra o produto pelo nome
+
+    if (!produto) {
+        document.getElementById('produto-details').innerHTML = "<p>Produto não encontrado.</p>";
+        return;
+    }
+
+    document.getElementById('produto-details').innerHTML = `
+        <img src="${produto.imagem}" alt="${produto.nome}" style="max-width: 300px;">
+        <h2>${produto.nome}</h2>
+        <p><strong>Preço:</strong> R$ ${produto.preco.toFixed(2)}</p>
+        <p><strong>Frete:</strong> R$ ${produto.frete.toFixed(2)}</p>
+        <p><strong>Descrição:</strong> ${produto.descricao}</p>
+    `;
+}
+
+window.onload = carregarProdutoDetalhes;
+
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+            window.onload = function() {
+                const nome = getUrlParameter('nome');
+                const preco = getUrlParameter('preco');
+                const frete = getUrlParameter('frete');
+                const descricao = getUrlParameter('descricao');
+
+                const produtoDiv = document.getElementById('produto-details');
+                produtoDiv.innerHTML = `
+                    <h2>${nome}</h2>
+                    <p><strong>Preço:</strong> R$ ${parseFloat(preco).toFixed(2)}</p>
+                    <p><strong>Frete:</strong> R$ ${parseFloat(frete).toFixed(2)}</p>
+                    <p><strong>Descrição:</strong> ${descricao}</p>
+                `;
+            }
+    </script>
+</body>
+</html>

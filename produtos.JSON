@@ -1,0 +1,114 @@
+[
+    {
+        "nome": "Bengala Dobrável",
+        "categoria": "saude",
+        "preco": 59.90,
+        "frete": 10.00,
+        "imagem": "public/assets/images/bengala-dobravel.webp",
+        "descricao": "Bengala dobrável leve e prática, ideal para quem necessita de apoio para caminhar. Compacta e fácil de transportar."
+    },
+    {
+        "nome": "Almofada Ortopédica",
+        "categoria": "bem-estar",
+        "preco": 89.90,
+        "frete": 0.00,
+        "imagem": "/public/assets/images/almofada-ortopedica.webp",
+        "descricao": "Almofada ortopédica para apoio da coluna. Proporciona conforto e alívio para dores nas costas durante longos períodos de descanso."
+    },
+    {
+        "nome": "Óculos de Leitura",
+        "categoria": "tecnologia",
+        "preco": 39.90,
+        "frete": 5.00,
+        "imagem": "public/assets/images/oculos-de-leitura.jpeg",
+        "descricao": "Óculos de leitura com design moderno e confortável. Ideal para quem precisa de correção de visão para leitura de perto."
+    },
+    {
+        "nome": "Massageador para Pés",
+        "categoria": "bem-estar",
+        "preco": 199.90,
+        "frete": 0.00,
+        "imagem": "public/assets/images/massageador-para-os-pes.jpg",
+        "descricao": "Massageador para pés com várias intensidades e funções, ajudando a relaxar os pés após um longo dia de trabalho."
+    },
+    {
+        "nome": "Aparelho de Pressão",
+        "categoria": "saude",
+        "preco": 129.90,
+        "frete": 15.00,
+        "imagem": "public/assets/images/aparelho-de-pressao.webp",
+        "descricao": "Aparelho de pressão digital fácil de usar, com memória para armazenar medições anteriores, ideal para monitorar a pressão arterial em casa."
+    },
+    {
+        "nome": "Cadeira de Descanso",
+        "categoria": "bem-estar",
+        "preco": 299.90,
+        "frete": 0.00,
+        "imagem": "public/assets/images/cadeira-de-descanso.jpg",
+        "descricao": "Cadeira de descanso confortável, com várias posições de reclínio, perfeita para relaxamento e descanso após atividades físicas."
+    },
+    {
+        "nome": "Tablet para Idosos",
+        "categoria": "tecnologia",
+        "preco": 699.90,
+        "frete": 20.00,
+        "imagem": "public/assets/images/tablet-para-idosos.webp",
+        "descricao": "Tablet com interface simplificada, ideal para idosos, com funcionalidades para facilitar a comunicação e o entretenimento."
+    },
+    {
+        "nome": "Telefone com Teclas Grandes",
+        "categoria": "tecnologia",
+        "preco": 189.90,
+        "frete": 0.00,
+        "imagem": "public/assets/images/telefone-com-teclas-grandes.webp",
+        "descricao": "Telefone com teclas grandes e visor de fácil leitura, ideal para pessoas com dificuldades de visão ou mobilidade."
+    },
+    {
+        "nome": "Tênis Ortopédico",
+        "categoria": "bem-estar",
+        "preco": 149.90,
+        "frete": 10.00,
+        "imagem": "public/assets/images/tenis-ortopedico.webp",
+        "descricao": "Tênis ortopédico para conforto e apoio adequado aos pés. Ideal para quem sofre de dores nos pés ou condições como fascite plantar."
+    },
+    {
+        "nome": "Kit de Exercícios para Terceira Idade",
+        "categoria": "saude",
+        "preco": 119.90,
+        "frete": 0.00,
+        "imagem": "public/assets/images/kit-de-exercicios-para-terceira-idade.webp",
+        "descricao": "Kit de exercícios leves e seguros, desenvolvido especialmente para idosos. Inclui acessórios e um guia de atividades para manter a saúde e mobilidade."
+    },
+    {
+        "nome": "Quebra-Cabeça",
+        "categoria": "bem-estar",
+        "preco": 9.90,
+        "frete": 19.90,
+        "imagem": "public/assets/images/quebra-cabeca.webp",
+        "descricao": "Qubra-cabeça grande tematico divertido para montar."
+    },
+    {
+        "nome": "Jogo de Xadrez",
+        "categoria": "bem-estar",
+        "preco": 19.90,
+        "frete": 40.00,
+        "imagem": "public/assets/images/jogo-de-xadrez.webp",
+        "descricao": "Jogo de xadrez de peças grandes de madeira, com acabemento vinilico."
+    },
+    {
+        "nome": "Livro com Letra Grande",
+        "categoria": "tecnologia",
+        "preco": 69.90,
+        "frete": 20.00,
+        "imagem": "public/assets/images/livro-grande.webp",
+        "descricao": "Livro evengélico com letras grandes."
+    },
+    {
+        "nome": "Kit de Artesanato",
+        "categoria": "bem-estar",
+        "preco": 119.90,
+        "frete": 20.00,
+        "imagem": "public/assets/images/kit-artesanato.webp",
+        "descricao": "Kit de de artesanato para passar o tempo."
+    }
+]
