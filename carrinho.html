@@ -44,7 +44,7 @@
     <script>
         
         async function carregarProdutoDetalhes() {
-    const response = await fetch('produtos.JSON');
+    const response = await fetch('produtos.json');
     const produtos = await response.json();
 
     const nomeParametro = new URLSearchParams(window.location.search).get('nome');
