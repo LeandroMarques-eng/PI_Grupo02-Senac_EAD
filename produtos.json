@@ -8,14 +8,6 @@
         "descricao": "Bengala dobrável leve e prática, ideal para quem necessita de apoio para caminhar. Compacta e fácil de transportar."
     },
     {
-        "nome": "Almofada Ortopédica",
-        "categoria": "bem-estar",
-        "preco": 89.90,
-        "frete": 0.00,
-        "imagem": "/public/assets/images/almofada-ortopedica.jpeg",
-        "descricao": "Almofada ortopédica para apoio da coluna. Proporciona conforto e alívio para dores nas costas durante longos períodos de descanso."
-    },
-    {
         "nome": "Óculos de Leitura",
         "categoria": "tecnologia",
         "preco": 39.90,
