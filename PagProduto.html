@@ -361,7 +361,7 @@
                 div.setAttribute('data-frete', produto.frete);
 
                 div.innerHTML = ` 
-                    <a href="detalhes-produto.HTML?id=${produto.nome.replace(/\s+/g, '-').toLowerCase()}">
+                    <a href="detalhes-produto.html?id=${produto.nome.replace(/\s+/g, '-').toLowerCase()}">
                         <img src="${produto.imagem}" alt="${produto.nome}">
                         <div class="product-details">
                             <p>${produto.nome}</p>
