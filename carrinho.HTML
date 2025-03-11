@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho de Compras</title>
+    <link rel="stylesheet" href="carrinho.css">
+</head>
+<body>
+
+    <header class="header">
+        <h1>Click Fácil</h1>
+        <div class="a11y-controls">
+            <button class="a11y-button-increase" onclick="alterarFonte(1)">A+</button>
+            <button class="a11y-button-decrease" onclick="alterarFonte(-1)">A-</button>
+            <button class="contrast-toggle" onclick="alterarContraste()">Alto Contraste</button>
+        </div>
+    </header>
+   
+    <div class="cart-container">
+        <button class="back-to-shop-button" onclick="window.location.href = 'index.html';">Voltar a Comprar</button>
+        
+        <h2>Carrinho de Compras</h2>
+        <div id="cart-items"></div>
+        <div class="total" id="total-price">Total: R$ 0.00</div>
+        <div class="total" id="frete-total">Frete: R$ 0.00</div>
+        <button class="checkout-button" onclick="openModal()">Finalizar Compra</button>
+    </div>
+
+    <div id="checkout-modal" class="checkout-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3>Resumo da Compra</h3>
+            <table class="modal-items-table" id="modal-items">
+            </table>
+            <div class="modal-total" id="modal-total"></div>
+            
+            <p class="modal-warning">Atenção: Este é um trabalho educativo. Os produtos não são reais e não estão à venda.</p>
+
+            <button class="modal-close-button" onclick="closeModal()">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        
+        async function carregarProdutoDetalhes() {
+    const response = await fetch('produtos.JSON');
+    const produtos = await response.json();
+
+    const nomeParametro = new URLSearchParams(window.location.search).get('nome');
+
+    const produto = produtos.find(p => p.nome === nomeParametro); // Encontra o produto pelo nome
+
+    if (!produto) {
+        document.getElementById('produto-details').innerHTML = "<p>Produto não encontrado.</p>";
+        return;
+    }
+
+    document.getElementById('produto-details').innerHTML = `
+        <img src="${produto.imagem}" alt="${produto.nome}" style="max-width: 300px;">
+        <h2>${produto.nome}</h2>
+        <p><strong>Preço:</strong> R$ ${produto.preco.toFixed(2)}</p>
+        <p><strong>Frete:</strong> R$ ${produto.frete.toFixed(2)}</p>
+        <p><strong>Descrição:</strong> ${produto.descricao}</p>
+    `;
+}
+        function carregarCarrinho() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = document.getElementById('cart-items');
+            const totalPriceContainer = document.getElementById('total-price');
+            const freteTotalContainer = document.getElementById('frete-total');
+            
+            cartItemsContainer.innerHTML = "";
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = "<p>Seu carrinho está vazio.</p>";
+                totalPriceContainer.textContent = "Total: R$ 0.00";
+                freteTotalContainer.textContent = "Frete: R$ 0.00";
+            } else {
+                let totalPrice = 0;
+                let totalFrete = 0;
+
+                cart.forEach(produto => {
+                    totalPrice += produto.preco * produto.quantidade;
+                    totalFrete += produto.frete * produto.quantidade;
+
+                    const div = document.createElement('div');
+                    div.classList.add('cart-item');
+
+                    div.innerHTML = `
+                        <img src="${produto.imagem}" alt="${produto.nome}">
+                        <div class="cart-item-details">
+                            <p>${produto.nome}</p>
+                            <span>R$ ${produto.preco.toFixed(2)} </span>
+                        </div>
+                        <div class="cart-item-right">
+                            <div class="quantity-buttons">
+                                <button class="quantity-button" onclick="updateQuantity('${produto.nome}', -1)">-</button>
+                                <span id="quantity-${produto.nome}">${produto.quantidade}</span>
+                                <button class="quantity-button" onclick="updateQuantity('${produto.nome}', 1)">+</button>
+                            </div>
+                            <p>Total: R$ ${(produto.preco * produto.quantidade).toFixed(2)}</p>
+                            <p>Frete: R$ ${produto.frete.toFixed(2)}</p>
+                            <button class="remove-button" data-produto='${JSON.stringify(produto)}'>Remover</button>
+                        </div>
+                    `;
+
+                    cartItemsContainer.appendChild(div);
+
+                    div.querySelector('.remove-button').addEventListener('click', function(event) {
+                        removeFromCart(produto);
+                    });
+                });
+
+                totalPriceContainer.textContent = `Total: R$ ${totalPrice.toFixed(2)}`;
+                freteTotalContainer.textContent = `Frete: R$ ${totalFrete.toFixed(2)}`;
+            }
+        }
+
+        function updateQuantity(nome, change) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const produto = cart.find(item => item.nome === nome);
+            if (produto) {
+                produto.quantidade += change;
+                if (produto.quantidade <= 0) produto.quantidade = 1;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                carregarCarrinho();
+            }
+        }
+
+        function removeFromCart(produto) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = cart.filter(item => item.nome !== produto.nome);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            carregarCarrinho();
+        }
+
+        function openModal() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const modalItemsContainer = document.getElementById('modal-items');
+            const modalTotalContainer = document.getElementById('modal-total');
+            let total = 0;
+
+            modalItemsContainer.innerHTML = "";
+
+            cart.forEach(produto => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><img src="${produto.imagem}" alt="${produto.nome}"></td>
+                    <td>${produto.nome}</td>
+                    <td>R$ ${produto.preco.toFixed(2)}</td>
+                    <td>${produto.quantidade}</td>
+                    <td>R$ ${(produto.preco * produto.quantidade).toFixed(2)}</td>
+                `;
+                modalItemsContainer.appendChild(row);
+                total += produto.preco * produto.quantidade;
+            });
+
+            modalTotalContainer.textContent = `Total: R$ ${total.toFixed(2)}`;
+            document.getElementById('checkout-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('checkout-modal').style.display = 'none';
+        }
+
+        function alterarFonte(valor) {
+            const body = document.body;
+            const fontSize = window.getComputedStyle(body).fontSize;
+            const newSize = parseFloat(fontSize) + (valor * 2);
+            body.style.fontSize = newSize + "px";
+        }
+
+      
+        function alterarContraste() {
+            document.body.classList.toggle('high-contrast');
+        }
+
+
+        carregarCarrinho();
+    </script>
+</body>
+</html>

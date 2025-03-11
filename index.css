@@ -1,0 +1,254 @@
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease-in-out;
+    min-height: 100vh;
+}
+
+.hero {
+    position: relative;
+    width: 100%;
+    max-width: 2000px;
+    margin: 0 auto;
+    min-height: 45vh;
+    background: url('/public/assets/images/Imagem 2.jpeg') center center / contain no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center; 
+    padding: 20px; 
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.384);
+    padding: 50px;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 95%;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button, .nav-button {
+    display: inline-block;
+    background: #f4b400;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1em;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover, .nav-button:hover {
+    background: #d19a00;
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.logo img {
+    height: 80px;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+}
+
+.social-media {
+    position: absolute;
+    top: 60px;
+    right: 50px; 
+    display: flex;
+    align-items: center;
+}
+
+.social-media p {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #2C3E50;
+    margin-right: 10px;
+}
+
+.social-media img {
+    width: 32px;
+    height: 32px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.social-media img:hover {
+    transform: scale(1.1);
+}
+
+.whatsapp-icon {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 55px;
+    height: 55px;
+    z-index: 1000;
+}
+
+.whatsapp-icon img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.whatsapp-icon img:hover {
+    transform: scale(1.1);
+}
+
+.like-badge {
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    width: 60px;
+    z-index: 1000;  
+    height: 30px;
+}
+
+.like-badge img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.like-badge img:hover {
+    transform: scale(1.1);
+}
+
+.contrast-button {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    background: #e6e2b0;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.contrast-button:hover {
+    background: #222;
+    color: white;
+}
+
+.high-contrast {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+.high-contrast .hero-text,
+.high-contrast .cta-button,
+.high-contrast .contrast-button,
+.high-contrast .introducao,
+.high-contrast .introducao-box,
+.high-contrast .nav-links a,
+.high-contrast footer {
+    background-color: #fff !important;
+    color: #000 !important;
+    border-color: #000 !important;
+}
+
+.introducao {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.introducao h2 {
+    font-size: 2.1em;
+    color: #2C3E50;
+    margin-bottom: 20px;
+}
+
+.introducao-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.introducao-box {
+    flex: 1;
+    min-width: 320px;
+    background: #f4b400;
+    color: #fff;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    line-height: 1.5;
+    transition: transform 0.3s ease-in-out;
+}
+
+.introducao-box:hover {
+    transform: scale(1.05);
+}
+
+footer {
+    background: #2C3E50;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    font-size: 1em;
+    font-weight: 500;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2);
+    margin-top: auto;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 35vh;
+        padding: 15px;
+    }
+
+    .hero-text {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .hero-text h1 {
+        font-size: 2em;
+    }
+
+    .hero-text p {
+        font-size: 1.1em;
+    }
+
+    .nav-links {
+        flex-direction: column;
+    }
+
+    .cta-button, .nav-button {
+        font-size: 1em;
+        padding: 10px 18px;
+    }
+}
