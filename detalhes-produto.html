@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Produto</title>
-    <link rel="stylesheet" href="/detalhes.css">
+    <link rel="stylesheet" href="detalhes.css">
     <style>
         .control-buttons {
             position: fixed;
@@ -91,8 +91,8 @@
             <div class="header-container">
                 <h1>Detalhes do Produto</h1>
                 <img class="logo" src="public/assets/images/Logo Click Fácil.png" alt="Logo do E-commerce Inclusivo">
-                <a href="PagProduto.HTML" class="back-link">← Voltar para a loja</a>
-                <a href="carrinho.HTML" class="cart-link">🛒 Ver Carrinho</a>
+                <a href="PagProduto.html" class="back-link">← Voltar para a loja</a>
+                <a href="carrinho.html" class="cart-link">🛒 Ver Carrinho</a>
             </div>
         </header>
 
@@ -175,7 +175,7 @@
             const params = new URLSearchParams(window.location.search);
             const productId = params.get("id");
             
-            fetch('produtos.JSON')
+            fetch('produtos.json')
                 .then(response => response.json())
                 .then(products => {
                     const product = products.find(p => p.nome.replace(/\s+/g, '-').toLowerCase() === productId);
